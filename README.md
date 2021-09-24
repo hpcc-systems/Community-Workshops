@@ -20,7 +20,7 @@ ecl bundle install https://github.com/hpcc-systems/LearningTrees.git
 
 **Sample dataset´s can be downloaded from the following locations**
 
-Hour1 (Clustering): http://geosampa.prefeitura.sp.gov.br/PaginasPublicas/_SBC.aspx (IPTU)
+Hour1 (Clustering): http://geosampa.prefeitura.sp.gov.br/PaginasPublicas/_SBC.aspx (Cadastro > IPTU > IPTU_2019)
 
 Hour2 (Linear Regression): https://learn.lexisnexis.com/Activity/1102# (OnlineProperty) 
 
