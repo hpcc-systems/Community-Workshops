@@ -18,16 +18,16 @@ ecl bundle install https://github.com/hpcc-systems/LearningTrees.git
 ```
 **Note I**:  Alternatively, you can try the code examples directly by using GitPod: https://gitpod.io/#https://github.com/hpcc-systems/Community-Workshops
 
-**Sample dataset´s can be downloaded from the following locations**
+**Sample dataset´s can be downloaded from the following locations:**
 
-Hour1 (Clustering): http://geosampa.prefeitura.sp.gov.br/PaginasPublicas/_SBC.aspx (Cadastro > IPTU > IPTU_2019)
+- Hour1 (Clustering): http://geosampa.prefeitura.sp.gov.br/PaginasPublicas/_SBC.aspx (Cadastro > IPTU > IPTU_2019)
 
-Hour2 (Linear Regression): https://learn.lexisnexis.com/Activity/1102# (OnlineProperty) 
+- Hour2 (Linear Regression): https://learn.lexisnexis.com/Activity/1102# (OnlineProperty) 
 
-Hour2 (Logistic Regression): https://archive.ics.uci.edu/ml/datasets/bank+marketing (bank-additional-full.csv) 
+- Hour2 (Logistic Regression): https://archive.ics.uci.edu/ml/datasets/bank+marketing (bank-additional-full.csv) 
 
-Hour3 (GNN): https://learn.lexisnexis.com/Activity/2553# (GNNTutorial)
+- Hour3 (GNN): https://learn.lexisnexis.com/Activity/2553# (GNNTutorial)
 
-Hour3 (Gradient Boosted Forest): https://learn.lexisnexis.com/Activity/1102# (OnlineProperty)  
+- Hour3 (Gradient Boosted Forest): https://learn.lexisnexis.com/Activity/1102# (OnlineProperty)  
 
 **Note II**:  These dataset´s are already sprayed and available in the training cluster utilized during the workshops and are listed here only for future reference.
