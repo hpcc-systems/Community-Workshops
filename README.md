@@ -1,5 +1,5 @@
 # Community-Workshops
-ECL course material for community workshops
+ECL course material for community workshops. Training cluster address will be informed closer to the event.
 
 # Client installation pre-requisites
 1. Download and install the latest ECL IDE version availble from https://hpccsystems.com/download#HPCC-Platform. For detailed information on how to setup the ECL IDE, please watch this instructional video: https://www.youtube.com/watch?v=TT7rCcyWTAo
@@ -20,14 +20,14 @@ ecl bundle install https://github.com/hpcc-systems/LearningTrees.git
 
 **Sample dataset´s can be downloaded from the following locations**
 
-Hour1: http://geosampa.prefeitura.sp.gov.br/PaginasPublicas/_SBC.aspx (Clustering)
+Hour1 (Clustering): http://geosampa.prefeitura.sp.gov.br/PaginasPublicas/_SBC.aspx (IPTU)
 
-Hour2: https://learn.lexisnexis.com/Activity/1102#  (Linear Regression)
+Hour2 (Linear Regression): https://learn.lexisnexis.com/Activity/1102# (OnlineProperty) 
 
-Hour2: https://archive.ics.uci.edu/ml/datasets/bank+marketing  (Logistic Regression)
+Hour2 (Logistic Regression): https://archive.ics.uci.edu/ml/datasets/bank+marketing (bank-additional-full.csv) 
 
-Hour3: https://learn.lexisnexis.com/Activity/2553# (GNN)
+Hour3 (GNN): https://learn.lexisnexis.com/Activity/2553# (GNNTutorial)
 
-Hour3: https://learn.lexisnexis.com/Activity/1102#  (Linear Regression)
+Hour3 (Gradient Boosted Forest): https://learn.lexisnexis.com/Activity/1102# (OnlineProperty)  
 
 **Note II**:  These dataset´s are already sprayed and available in the training cluster utilized during the workshops and are listed here only for future reference.
