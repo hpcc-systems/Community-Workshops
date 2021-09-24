@@ -5,7 +5,7 @@
             "name": "playground",
             "type": "ecl",
             "request": "launch",
-            "protocol": "https",
+            "protocol": "http",
             "serverAddress": "18.237.135.7",
             "port": 8010,
             "targetCluster": "thor",
