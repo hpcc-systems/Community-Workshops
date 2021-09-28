@@ -1,5 +1,5 @@
 # Community-Workshops
-ECL course material for community workshops. The training cluster address utilized during the workshop is: http://52.52.151.87:8010/.
+ECL course material for community workshops. The training cluster utilized during the workshop is: http://52.52.151.87:8010/.
 
 # Client installation prerequisites
 1. Download and install the latest ECL IDE version available from https://hpccsystems.com/download#HPCC-Platform. For detailed information on how to setup the ECL IDE, please watch this instructional video: https://www.youtube.com/watch?v=TT7rCcyWTAo
@@ -16,7 +16,7 @@ ecl bundle install https://github.com/hpcc-systems/LogisticRegression.git
 ecl bundle install https://github.com/hpcc-systems/GNN.git
 ecl bundle install https://github.com/hpcc-systems/LearningTrees.git
 ```
-**Note I**:  Alternatively, by using your GitHub credentials, you can try the code examples directly via GitPod: https://gitpod.io/#https://github.com/hpcc-systems/Community-Workshops
+**Note I**:  Alternatively, by using your GitHub credentials, you can try the code examples directly via GitPod: https://gitpod.io/#https://github.com/HWatanuki/Community-Workshops
 
 **Sample datasets can be downloaded from the following locations:**
 
