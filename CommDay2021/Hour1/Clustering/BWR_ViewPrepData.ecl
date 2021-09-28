@@ -3,6 +3,8 @@
 //Browse raw input data
 OUTPUT($.File_Housing.File,NAMED('Housing'));
 COUNT($.File_Housing.File);
+
+// Profiling the raw data
 // OUTPUT(STD.DataPatterns.Benford($.File_Housing.File));
 // OUTPUT(STD.DataPatterns.Profile($.File_Housing.File));
 
@@ -14,8 +16,6 @@ COUNT($.File_Housing.File);
 // OUTPUT($.Prep01.myTrainData,NAMED('MyTrainData'));
 
 //Browse standardized and converted train data
-// OUTPUT($.Convert02.myAggs,NAMED('BasicStats'));
-// OUTPUT($.Convert02.myTrainDataSTD,NAMED('TrainDataStd'));
 // OUTPUT($.Convert02.myTrainAttrNF,NAMED('TrainAttributesNF'));
 
 

@@ -6,7 +6,7 @@ EXPORT File_Image := MODULE
 //first 4 bytes contain the length of the image data
   UNSIGNED8  RecPos{virtual(fileposition)};
  END;
- EXPORT imageData := DATASET('~imagedb::bmf',imageRecord,FLAT);
+ EXPORT imageData := DATASET('~imagedb::tutorialGNNEx1',imageRecord,FLAT);
  //Add RecID and Dependent Data
  EXPORT imageRecordPlus := RECORD
    UNSIGNED1 RecID; 

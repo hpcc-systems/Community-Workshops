@@ -13,17 +13,15 @@ EXPORT Prep01 := MODULE
 							 
   EXPORT myDataE := PROJECT(Property(CleanFilter), TRANSFORM(MLPropExt, 
                                                              SELF.rnd := RANDOM(),
-                                                             SELF := LEFT))
-																							               :PERSIST('~Tutorial::LinearRegression::XXX::PrepProp');
+                                                             SELF := LEFT));
+																														 
   // Shuffle your data by sorting on the random field
   SHARED myDataES := SORT(myDataE, rnd);
   // Now cut the deck and you have random samples within each set
   // While you're at it, project back to your original format -- we dont need the rnd field anymore
   // Treat first 5000 as training data.  Transform back to the original format.
-  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop)
-                                :PERSIST('~Tutorial::LinearRegression::XXX::Train');  
+  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop);  
   // Treat next 2000 as test data
-  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop)
-                                :PERSIST('~Tutorial::LinearRegression::XXX::Test'); 
+  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop); 
 END;
 

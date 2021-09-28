@@ -1,4 +1,5 @@
-﻿// NOTE:: This example should be run on small clusters (3 nodes or less) - running on 
+﻿//Import:ecl:Workshops.CommDay2021.Hour3.GNNEx1.BWR_ImageGNN
+// NOTE:: This example should be run on small clusters (3 nodes or less) - running on 
 // larger clusters will post a traceback "index out of range" error due to not enough 
 // samples. This is a known issue and will be resolved in a future release.
 IMPORT $;
@@ -153,3 +154,45 @@ OUTPUT(SORT(testYDat, indexes), ALL, NAMED('testDat'));
 OUTPUT(preds, NAMED('predictions'));
 predDatClass := Utils.Probabilities2Class(predDat);
 OUTPUT(SORT(predDatClass, value), ALL, NAMED('predDat'));
+
+//Import:ecl:Workshops.CommDay2021.Hour3.GNNEx1.BWR_Images
+IMPORT $;
+OUTPUT($.File_Image.imageData,NAMED('All'));
+OUTPUT($.File_Image.mytraindata,NAMED('Train'));
+OUTPUT($.File_Image.mytestdata,NAMED('Test'));
+
+
+
+
+//Import:ecl:Workshops.CommDay2021.Hour3.GNNEx1.File_Image
+IMPORT STD;
+EXPORT File_Image := MODULE
+ EXPORT imageRecord := RECORD
+  STRING filename;
+  DATA   image;   
+//first 4 bytes contain the length of the image data
+  UNSIGNED8  RecPos{virtual(fileposition)};
+ END;
+ EXPORT imageData := DATASET('~imagedb::tutorialGNNEx1',imageRecord,FLAT);
+ //Add RecID and Dependent Data
+ EXPORT imageRecordPlus := RECORD
+   UNSIGNED1 RecID; 
+   UNSIGNED1 YType;
+   imageRecord;
+ END;
+ 
+  EXPORT mytraindata := PROJECT(imageData[1..5]+imageData[9..12], 
+	                                 TRANSFORM(imageRecordPlus,
+	                                           SELF.RecID := COUNTER,
+																									           SELF.YType := IF(STD.STR.Find(LEFT.filename,'dog')<> 0,1,0),;
+																															   SELF.Image := LEFT.IMAGE[55..],//was 51
+																																  SELF := LEFT));
+																																	
+	 EXPORT mytestdata := PROJECT(imageData[6..7]+imagedata[13..14], 
+	                                 TRANSFORM(imageRecordPlus,
+	                                           SELF.RecID := COUNTER,
+																									           SELF.YType := IF(STD.STR.Find(LEFT.filename,'dog')<> 0,1,0),;
+																															   SELF.Image := LEFT.IMAGE[55..],//was 51
+																																  SELF := LEFT));																																
+																																		 
+END;

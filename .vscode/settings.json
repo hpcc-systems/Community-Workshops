@@ -1,5 +1,5 @@
 {
-    "ecl.launchConfiguration": "playground (hpcc-systems)",
+    "ecl.launchConfiguration": "CommDayWorkshop2021",
     "ecl.targetCluster": {},
     "ecl.eclccPath": "/usr/bin/eclcc"
 }

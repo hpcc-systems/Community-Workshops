@@ -9,5 +9,5 @@ EXPORT Layout := RECORD
     STRING W7;
 END;
 
-EXPORT File := DATASET('~JEFF::Weights_In',Layout,CSV);
+EXPORT File := DATASET('~TutorialGNNEx2::Weights_In',Layout,CSV);
 END;

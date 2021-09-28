@@ -1,7 +1,7 @@
 ﻿IMPORT $;
 // Browse raw input data
-// OUTPUT($.File_Property.File,NAMED('Property'));
-// COUNT($.File_Property.File);
+OUTPUT($.File_Property.File,NAMED('Property'));
+COUNT($.File_Property.File);
 
 // Browse clean input data
 // OUTPUT($.Prep01.myDataE,NAMED('CleanProperty'));
@@ -14,8 +14,8 @@
 // COUNT($.Prep01.myTestData);
 
 // Browse converted train and test data
-OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
-OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
-OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
-OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));
+// OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
+// OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
+// OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
+// OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));
 

@@ -1,4 +1,9 @@
-﻿EXPORT File_Property := MODULE
+﻿// The dataset we are using contains ficticious information from properties. 
+// The regression goal is to train a model that can predict property prices.
+// The raw dataset can be downloaded from our online ECL Training Advanced ECL (part1) class:
+// https://learn.lexisnexis.com/Activity/1102# (OnlineProperty)
+
+EXPORT File_Property := MODULE
   //Original record structure for property dataset
   EXPORT Layout := RECORD
    UNSIGNED8 personid;

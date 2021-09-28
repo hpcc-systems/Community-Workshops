@@ -2,14 +2,15 @@
 IMPORT ML_Core;
 myTrainData := $.Prep01.myTrainData;
 
-ML_Core.AppendSeqId(myTrainData,recid,myTrainIDData);//Add a sequential ID 
-// OUTPUT(myTrainIDData, NAMED('TrainDataNF'));  //Spot the sequential recid field created
+//Add a sequential ID
+ML_Core.AppendSeqId(myTrainData,recid,myTrainIDData); 
+// OUTPUT(myTrainIDData, NAMED('TrainDataID'));  //Uncomment to spot the sequential recid field created
 
 //Numeric Field Matrix conversion
 ML_Core.ToField(myTrainIDData, myTrainIDDataNF);
-// OUTPUT(myTrainIDDataNF, NAMED('TrainDataNF'));  //Spot the Numeric Field Matrix conversion
+// OUTPUT(myTrainIDDataNF, NAMED('TrainDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
 
-//*
+//* <-- Delete the first forward slash (/) just before the asterisk (*) to comment out the entire MODULE
 EXPORT Convert02 := MODULE
   //Calculate basic statistics for the field values
   EXPORT myAggs := ML_Core.FieldAggregates(myTrainIDDataNF).simple;

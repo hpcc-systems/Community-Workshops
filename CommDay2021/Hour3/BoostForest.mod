@@ -32,9 +32,10 @@ myTestData  := $.Prep01.myTestData;
 //Numeric Field Matrix conversion
 ML_Core.ToField(myTrainData, myTrainDataNF);
 ML_Core.ToField(myTestData, myTestDataNF);
-// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Spot the Numeric Field Matrix conversion
-// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Spot the Numeric Field Matrix conversion
+// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
+// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
 
+//* <-- Delete the first forward slash (/) just before the asterisk (*) to comment out the entire MODULE
 EXPORT Convert02 := MODULE
   //We have 9 independent fields and the last field (10) is the dependent
   EXPORT myIndTrainDataNF := myTrainDataNF(number < 10); // Number is the field number
@@ -48,7 +49,7 @@ EXPORT Convert02 := MODULE
                                               SELF.number := 1,
                                               SELF := LEFT));
 END;
-
+// */
 //Import:ecl:Workshops.CommDay2021.Hour3.BoostForest.Convert02_MI
 IMPORT $;
 IMPORT ML_Core;
@@ -59,9 +60,10 @@ myTestData  := $.Prep01_MI.myTestData;
 //Numeric Field Matrix conversion
 ML_Core.ToField(myTrainData, myTrainDataNF,wiField := wi_id);
 ML_Core.ToField(myTestData, myTestDataNF,wiField := wi_id);
-// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Spot the Numeric Field Matrix conversion
-// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Spot the Numeric Field Matrix conversion
+// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
+// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
 
+//* <-- Delete the first forward slash (/) just before the asterisk (*) to comment out the entire MODULE
 EXPORT Convert02_MI := MODULE
   //We have 9 independent fields and the last field (10) is the dependent
   EXPORT myIndTrainDataNF := myTrainDataNF(number < 10); // Number is the field number
@@ -75,8 +77,13 @@ EXPORT Convert02_MI := MODULE
                                               SELF.number := 1,
                                               SELF := LEFT));
 END;
-
+// */
 //Import:ecl:Workshops.CommDay2021.Hour3.BoostForest.File_Property
+// The dataset we are using contains ficticious information from properties. 
+// The regression goal is to train a model that can predict property prices.
+// The raw dataset can be downloaded from our online ECL Training Advanced ECL (part1) class:
+// https://learn.lexisnexis.com/Activity/1102# (OnlineProperty)
+
 EXPORT File_Property := MODULE
   EXPORT Layout := RECORD
    UNSIGNED8 personid;
@@ -102,7 +109,9 @@ EXPORT File_Property := MODULE
    UNSIGNED2 year_built;
   END;
   EXPORT File := DATASET('~Tutorial::BoostForest::Property',Layout,THOR);
-  EXPORT MLProp := RECORD
+ 
+ //New record structure for training the property price model  
+	EXPORT MLProp := RECORD
    UNSIGNED8 PropertyID; //identifier - required for LearningTrees NF
    UNSIGNED3 zip;				 //Categorical independent variable - need to be converted to a numerical value
    UNSIGNED4 assessed_value;
@@ -115,6 +124,8 @@ EXPORT File_Property := MODULE
    UNSIGNED2 year_built;
    UNSIGNED4 total_value; //Dependent Variable - what we are trying to predict
  END;
+ 
+ //New record structure for training multiple property price models using Myriad Interface
  EXPORT MLPropMI := RECORD
   MLProp;
   UNSIGNED4 wi_id;   //work-item id for Myriad Interface
@@ -138,18 +149,18 @@ EXPORT Prep01 := MODULE
   EXPORT myDataE := PROJECT(Property(CleanFilter), TRANSFORM(MLPropExt, 
                                                              SELF.rnd := RANDOM(),
                                                              SELF.Zip := (UNSIGNED3)LEFT.Zip,
-                                                             SELF := LEFT))
-																							               :PERSIST('~Tutorial::BoostForest::XXX::PrepProp');
+                                                             SELF := LEFT));
+																							               
   // Shuffle your data by sorting on the random field
   SHARED myDataES := SORT(myDataE, rnd);
   // Now cut the deck and you have random samples within each set
   // While you're at it, project back to your original format -- we dont need the rnd field anymore
   // Treat first 5000 as training data.  Transform back to the original format.
-  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop)
-                                :PERSIST('~Tutorial::BoostForest::XXX::Train');  
+  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop);
+                                  
   // Treat next 2000 as test data
-  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop)
-                                :PERSIST('~Tutorial::BoostForest::XXX::Test'); 
+  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop);
+                                 
 END;
 
 //Import:ecl:Workshops.CommDay2021.Hour3.BoostForest.Prep01_MI
@@ -173,18 +184,18 @@ EXPORT Prep01_MI := MODULE
 				  																									                   LEFT.State = 'NY' => 2,
 					  																																	 LEFT.State = 'FL' => 3,
 						  																																 0),
-                                                             SELF := LEFT))
-								  															             :PERSIST('~Tutorial::BoostForest::XXX::PrepProp');
+                                                             SELF := LEFT));
+								  															             
   // Shuffle your data by sorting on the random field
   SHARED myDataES := SORT(myDataE(wi_id <> 0), rnd);
   // Now cut the deck and you have random samples within each set
   // While you're at it, project back to your original format -- we dont need the rnd field anymore
   // Treat first 5000 as training data.  Transform back to the original format.
-  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop)
-                               :PERSIST('~Tutorial::BoostForest::XXX::Train');  
+  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop);
+                                 
   // Treat next 2000 as test data
-  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop)
-                               :PERSIST('~Tutorial::BoostForest::XXX::Test'); 
+  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop);
+                               
 END;
 
 //Import:ecl:Workshops.CommDay2021.Hour3.BoostForest.Train03

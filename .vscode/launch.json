@@ -2,11 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "playground",
+            "name": "CommDayWorkshop2021",
             "type": "ecl",
             "request": "launch",
             "protocol": "http",
-            "serverAddress": "18.237.135.7",
+            "serverAddress": "52.52.151.87",
             "port": 8010,
             "targetCluster": "thor",
             "rejectUnauthorized": true,

@@ -4,6 +4,8 @@ IMPORT $,STD;
 //Browse raw input data
 OUTPUT($.File_Housing.File,NAMED('Housing'));
 COUNT($.File_Housing.File);
+
+// Profiling the raw data
 // OUTPUT(STD.DataPatterns.Benford($.File_Housing.File));
 // OUTPUT(STD.DataPatterns.Profile($.File_Housing.File));
 
@@ -15,8 +17,6 @@ COUNT($.File_Housing.File);
 // OUTPUT($.Prep01.myTrainData,NAMED('MyTrainData'));
 
 //Browse standardized and converted train data
-// OUTPUT($.Convert02.myAggs,NAMED('BasicStats'));
-// OUTPUT($.Convert02.myTrainDataSTD,NAMED('TrainDataStd'));
 // OUTPUT($.Convert02.myTrainAttrNF,NAMED('TrainAttributesNF'));
 
 
@@ -27,14 +27,15 @@ IMPORT $;
 IMPORT ML_Core;
 myTrainData := $.Prep01.myTrainData;
 
-ML_Core.AppendSeqId(myTrainData,recid,myTrainIDData);//Add a sequential ID 
-// OUTPUT(myTrainIDData, NAMED('TrainDataNF'));  //Spot the sequential recid field created
+//Add a sequential ID
+ML_Core.AppendSeqId(myTrainData,recid,myTrainIDData); 
+// OUTPUT(myTrainIDData, NAMED('TrainDataID'));  //Uncomment to spot the sequential recid field created
 
 //Numeric Field Matrix conversion
 ML_Core.ToField(myTrainIDData, myTrainIDDataNF);
-// OUTPUT(myTrainIDDataNF, NAMED('TrainDataNF'));  //Spot the Numeric Field Matrix conversion
+// OUTPUT(myTrainIDDataNF, NAMED('TrainDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
 
-//*
+//* <-- Delete the first forward slash (/) just before the asterisk (*) to comment out the entire MODULE
 EXPORT Convert02 := MODULE
   //Calculate basic statistics for the field values
   EXPORT myAggs := ML_Core.FieldAggregates(myTrainIDDataNF).simple;
@@ -71,6 +72,13 @@ EXPORT Convert02 := MODULE
 END;
 // */
 //Import:ecl:Workshops.CommDay2021.Hour1.Clustering.File_Housing
+// The dataset we are using contains publicly available information from properties of the City of São Paulo, Brazil. 
+// The clustering goal is to generate clusters of properties sharing similar physical attributes.
+// The attributes selected for clustering are utilized to calculate the municipal property taxes:
+// https://web1.sf.prefeitura.sp.gov.br/CartelaIPTU/  
+// The raw dataset can be downloaded from:
+// http://geosampa.prefeitura.sp.gov.br/PaginasPublicas/_SBC.aspx (Cadastro > IPTU > IPTU_2019)
+
 EXPORT File_Housing := MODULE
   EXPORT Layout := RECORD
 		STRING numero_do_contribuinte;
@@ -120,7 +128,8 @@ EXPORT File_Housing := MODULE
   END;
 
   EXPORT File:=DATASET('~Tutorial::Clustering::Housing',Layout,CSV(HEADING(1)));
-
+ 
+ //New record structure for the property attributes that will be clustered
 	EXPORT MLHousing := RECORD
 	  //REAL field types will be standardized for clustering
 		REAL NumberOfFronts;				// Number of fronts from the property
@@ -190,11 +199,11 @@ IMPORT DBSCAN;
 //Training Data
 TrainAttr := $.Convert02.myTrainAttrNF;
 
-//Train the DBScan model on Housing data
+//Train the DBScan model on Housing data - results might vary depending on your training sample
 // MyModel :=  DBSCAN.DBSCAN().Fit(TrainAttr); //SS: (-0.63), 22 clusters 4950 outliers
 // MyModel :=  DBSCAN.DBSCAN(1,20).Fit(TrainAttr); //SS: (0.41), 9 clusters 335 outliers
 // MyModel :=  DBSCAN.DBSCAN(10,20).Fit(TrainAttr); //SS: (0.90), 1 cluster 34 outliers
-MYModel :=  DBSCAN.DBSCAN(4,4).Fit(TrainAttr); //SS: (0.62), 5 clusters 39 outliers
+MYModel :=  DBSCAN.DBSCAN(4,4).Fit(TrainAttr); //SS: (0.62), 5 clusters 39 outliers 
 OUTPUT(MyModel,ALL,NAMED('Model'));
 OUTPUT(MyModel(label=0),NAMED('Outliers'));
 
@@ -223,6 +232,7 @@ IMPORT KMeans;
 TrainAttr := $.Convert02.myTrainAttrNF;
 
 //Initial centroids
+//Remember to update the values in the SET according to your previous DBSCAN run
 Centroids := TrainAttr(id IN [3,116,591,2036,2299]);
 
 //Setup the model parameters and the model

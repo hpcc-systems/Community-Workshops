@@ -1,8 +1,8 @@
 ﻿//Import:ecl:Workshops.CommDay2021.Hour2.LinearReg.BWR_ViewPrepData
 IMPORT $;
 // Browse raw input data
-// OUTPUT($.File_Property.File,NAMED('Property'));
-// COUNT($.File_Property.File);
+OUTPUT($.File_Property.File,NAMED('Property'));
+COUNT($.File_Property.File);
 
 // Browse clean input data
 // OUTPUT($.Prep01.myDataE,NAMED('CleanProperty'));
@@ -15,10 +15,10 @@ IMPORT $;
 // COUNT($.Prep01.myTestData);
 
 // Browse converted train and test data
-OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
-OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
-OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
-OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));
+// OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
+// OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
+// OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
+// OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));
 
 
 //Import:ecl:Workshops.CommDay2021.Hour2.LinearReg.Convert02
@@ -35,9 +35,10 @@ ML_Core.AppendSeqId(myTestData,id,myTestIDData);
 //Numeric Field Matrix conversion
 ML_Core.ToField(myTrainIDData, myTrainDataNF);
 ML_Core.ToField(myTestIDData, myTestDataNF);
-// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Spot the Numeric Field Matrix conversion
-// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Spot the Numeric Field Matrix conversion
+// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
+// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
 
+//* <-- Delete the first forward slash (/) just before the asterisk (*) to comment out the entire MODULE
 EXPORT Convert02 := MODULE
    //We have 8 independent fields and the last field (9) is the dependent
    EXPORT myIndTrainDataNF := myTrainDataNF(number < 9); // Number is the field number
@@ -52,8 +53,13 @@ EXPORT Convert02 := MODULE
                                                SELF := LEFT));
    																									
 END;
-
+// */
 //Import:ecl:Workshops.CommDay2021.Hour2.LinearReg.File_Property
+// The dataset we are using contains ficticious information from properties. 
+// The regression goal is to train a model that can predict property prices.
+// The raw dataset can be downloaded from our online ECL Training Advanced ECL (part1) class:
+// https://learn.lexisnexis.com/Activity/1102# (OnlineProperty)
+
 EXPORT File_Property := MODULE
   //Original record structure for property dataset
   EXPORT Layout := RECORD
@@ -110,18 +116,16 @@ EXPORT Prep01 := MODULE
 							 
   EXPORT myDataE := PROJECT(Property(CleanFilter), TRANSFORM(MLPropExt, 
                                                              SELF.rnd := RANDOM(),
-                                                             SELF := LEFT))
-																							               :PERSIST('~Tutorial::LinearRegression::XXX::PrepProp');
+                                                             SELF := LEFT));
+																														 
   // Shuffle your data by sorting on the random field
   SHARED myDataES := SORT(myDataE, rnd);
   // Now cut the deck and you have random samples within each set
   // While you're at it, project back to your original format -- we dont need the rnd field anymore
   // Treat first 5000 as training data.  Transform back to the original format.
-  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop)
-                                :PERSIST('~Tutorial::LinearRegression::XXX::Train');  
+  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop);  
   // Treat next 2000 as test data
-  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop)
-                                :PERSIST('~Tutorial::LinearRegression::XXX::Test'); 
+  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop); 
 END;
 
 

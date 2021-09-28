@@ -1,7 +1,7 @@
 ﻿// The dataset we are using shows direct marketing campaigns (phone calls) of a 
 // Portuguese banking institution. The classification goal is to predict whether the client 
 // will subscribe (1/0) to a term deposit (variable y).
-//https://raw.githubusercontent.com/madmashup/targeted-marketing-predictive-engine/master/banking.csv
+// https://archive.ics.uci.edu/ml/datasets/bank+marketing (bank-additional-full.csv)
 
 EXPORT File_Banking := MODULE
 //** = categorical
@@ -29,12 +29,9 @@ EXPORT File_Banking := MODULE
     STRING y;              //subscribed? Yes/No - dependent
   END;
 
-  // Related to direct marketing campaigns (phone calls) 
-  // of a Portuguese banking institution. The classification goal is to predict 
-  // whether the client will subscribe (1/0) to a term deposit (variable y).
-
   EXPORT File := DATASET('~Tutorial::LogisticRegression::banking',layout,CSV(HEADING(1)));
 
+  //New record structure for training the client subscription model
   EXPORT MLBank := RECORD
    UNSIGNED4 RecID;
   //*****quantitative below:

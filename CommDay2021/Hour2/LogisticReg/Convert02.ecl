@@ -7,9 +7,10 @@ myTestData  := $.Prep01.myTestData;
 //Numeric Field Matrix conversion
 ML_Core.ToField(myTrainData, myTrainDataNF);
 ML_Core.ToField(myTestData, myTestDataNF);
-// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Spot the Numeric Field Matrix conversion
-// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Spot the Numeric Field Matrix conversion
+// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
+// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
 
+//* <-- Delete the first forward slash (/) just before the asterisk (*) to comment out the entire MODULE
 EXPORT Convert02 := MODULE
   //We have 20 independent fields and the last field (21) is the dependent
   EXPORT myIndTrainDataNF := myTrainDataNF(number < 21); // Number is the field number
@@ -23,4 +24,4 @@ EXPORT Convert02 := MODULE
                                               SELF.number := 1,
                                               SELF := LEFT));
 END;
-
+// */

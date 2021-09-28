@@ -2,10 +2,10 @@
 IMPORT $,STD;
 
 //Browse raw input data
-// OUTPUT($.File_Banking.File,NAMED('Banking'));
-// COUNT($.File_Banking.File);
-// COUNT($.File_Banking.File(y='0'));
-// COUNT($.File_Banking.File(y='1'));
+OUTPUT($.File_Banking.File,NAMED('Banking'));
+COUNT($.File_Banking.File);
+COUNT($.File_Banking.File(y='0'));
+COUNT($.File_Banking.File(y='1'));
 
 // Profiling the raw data
 // STD.DataPatterns.Benford($.File_Banking.File);
@@ -22,10 +22,10 @@ IMPORT $,STD;
 // COUNT($.Prep01.myTestData);
 
 // Browse converted train and test data
-OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
-OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
-OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
-OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));
+// OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
+// OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
+// OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
+// OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));
 
 //Import:ecl:Workshops.CommDay2021.Hour2.LogisticReg.Convert02
 IMPORT $;
@@ -37,9 +37,10 @@ myTestData  := $.Prep01.myTestData;
 //Numeric Field Matrix conversion
 ML_Core.ToField(myTrainData, myTrainDataNF);
 ML_Core.ToField(myTestData, myTestDataNF);
-// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Spot the Numeric Field Matrix conversion
-// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Spot the Numeric Field Matrix conversion
+// OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
+// OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
 
+//* <-- Delete the first forward slash (/) just before the asterisk (*) to comment out the entire MODULE
 EXPORT Convert02 := MODULE
   //We have 20 independent fields and the last field (21) is the dependent
   EXPORT myIndTrainDataNF := myTrainDataNF(number < 21); // Number is the field number
@@ -53,9 +54,11 @@ EXPORT Convert02 := MODULE
                                               SELF.number := 1,
                                               SELF := LEFT));
 END;
-
+// */
 
 //Import:ecl:Workshops.CommDay2021.Hour2.LogisticReg.DCTs
+// Data Dictionary MODULE for label enconding of the categorical variables
+
 EXPORT DCTs := MODULE
  EXPORT Ed_DS :=
   DATASET([
@@ -143,7 +146,7 @@ END;
 // The dataset we are using shows direct marketing campaigns (phone calls) of a 
 // Portuguese banking institution. The classification goal is to predict whether the client 
 // will subscribe (1/0) to a term deposit (variable y).
-//https://raw.githubusercontent.com/madmashup/targeted-marketing-predictive-engine/master/banking.csv
+// https://archive.ics.uci.edu/ml/datasets/bank+marketing (bank-additional-full.csv)
 
 EXPORT File_Banking := MODULE
 //** = categorical
@@ -171,12 +174,9 @@ EXPORT File_Banking := MODULE
     STRING y;              //subscribed? Yes/No - dependent
   END;
 
-  // Related to direct marketing campaigns (phone calls) 
-  // of a Portuguese banking institution. The classification goal is to predict 
-  // whether the client will subscribe (1/0) to a term deposit (variable y).
-
   EXPORT File := DATASET('~Tutorial::LogisticRegression::banking',layout,CSV(HEADING(1)));
 
+  //New record structure for training the client subscription model
   EXPORT MLBank := RECORD
    UNSIGNED4 RecID;
   //*****quantitative below:
@@ -244,19 +244,19 @@ EXPORT Prep01 := MODULE
   END;
 
 
-  EXPORT myDataE := PROJECT(Bank,ML_Clean(LEFT,COUNTER))
-                           :PERSIST('~Tutorial::LogisticRegression::XXX::FormattedData');
+  EXPORT myDataE := PROJECT(Bank,ML_Clean(LEFT,COUNTER));
+                           
 
   // Shuffle your data by sorting on the random field
   SHARED myDataES := SORT(myDataE, rnd);
   // Now cut the deck and you have random samples within each set
   // While you're at it, project back to your original format -- we dont need the rnd field anymore
   // Treat first 5000 as training data.  Transform back to the original format.
-  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Bank)
-                               :PERSIST('~Tutorial::LogisticRegression::XXX::Train');  
+  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Bank);
+                                 
   // Treat next 2000 as test data
-  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Bank)
-                               :PERSIST('~Tutorial::LogisticRegression::XXX::Test'); 
+  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Bank);
+                                
 END;
 //Import:ecl:Workshops.CommDay2021.Hour2.LogisticReg.Train03
 IMPORT LogisticRegression as LR;

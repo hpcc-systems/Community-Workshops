@@ -5,11 +5,11 @@ IMPORT DBSCAN;
 //Training Data
 TrainAttr := $.Convert02.myTrainAttrNF;
 
-//Train the DBScan model on Housing data
+//Train the DBScan model on Housing data - results might vary depending on your training sample
 // MyModel :=  DBSCAN.DBSCAN().Fit(TrainAttr); //SS: (-0.63), 22 clusters 4950 outliers
 // MyModel :=  DBSCAN.DBSCAN(1,20).Fit(TrainAttr); //SS: (0.41), 9 clusters 335 outliers
 // MyModel :=  DBSCAN.DBSCAN(10,20).Fit(TrainAttr); //SS: (0.90), 1 cluster 34 outliers
-MYModel :=  DBSCAN.DBSCAN(4,4).Fit(TrainAttr); //SS: (0.62), 5 clusters 39 outliers
+MYModel :=  DBSCAN.DBSCAN(4,4).Fit(TrainAttr); //SS: (0.62), 5 clusters 39 outliers 
 OUTPUT(MyModel,ALL,NAMED('Model'));
 OUTPUT(MyModel(label=0),NAMED('Outliers'));
 

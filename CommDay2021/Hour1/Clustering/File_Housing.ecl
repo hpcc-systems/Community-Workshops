@@ -1,4 +1,11 @@
-﻿EXPORT File_Housing := MODULE
+﻿// The dataset we are using contains publicly available information from properties of the City of São Paulo, Brazil. 
+// The clustering goal is to generate clusters of properties sharing similar physical attributes.
+// The attributes selected for clustering are utilized to calculate the municipal property taxes:
+// https://web1.sf.prefeitura.sp.gov.br/CartelaIPTU/  
+// The raw dataset can be downloaded from:
+// http://geosampa.prefeitura.sp.gov.br/PaginasPublicas/_SBC.aspx (Cadastro > IPTU > IPTU_2019)
+
+EXPORT File_Housing := MODULE
   EXPORT Layout := RECORD
 		STRING numero_do_contribuinte;
 		STRING ano_do_exercicio;
@@ -47,7 +54,8 @@
   END;
 
   EXPORT File:=DATASET('~Tutorial::Clustering::Housing',Layout,CSV(HEADING(1)));
-
+ 
+ //New record structure for the property attributes that will be clustered
 	EXPORT MLHousing := RECORD
 	  //REAL field types will be standardized for clustering
 		REAL NumberOfFronts;				// Number of fronts from the property

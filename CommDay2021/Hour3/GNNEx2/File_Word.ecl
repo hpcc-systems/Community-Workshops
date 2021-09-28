@@ -102,5 +102,5 @@ EXPORT Layout := RECORD
     DECIMAL7_6 V100;
 END;
 
-EXPORT File := DATASET('~jeff::word_vectors_in',Layout,CSV);
+EXPORT File := DATASET('~TutorialGNNEx2::word_in',Layout,CSV);
 END;

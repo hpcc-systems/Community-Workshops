@@ -37,17 +37,17 @@ EXPORT Prep01 := MODULE
   END;
 
 
-  EXPORT myDataE := PROJECT(Bank,ML_Clean(LEFT,COUNTER))
-                           :PERSIST('~Tutorial::LogisticRegression::XXX::FormattedData');
+  EXPORT myDataE := PROJECT(Bank,ML_Clean(LEFT,COUNTER));
+                           
 
   // Shuffle your data by sorting on the random field
   SHARED myDataES := SORT(myDataE, rnd);
   // Now cut the deck and you have random samples within each set
   // While you're at it, project back to your original format -- we dont need the rnd field anymore
   // Treat first 5000 as training data.  Transform back to the original format.
-  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Bank)
-                               :PERSIST('~Tutorial::LogisticRegression::XXX::Train');  
+  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Bank);
+                                 
   // Treat next 2000 as test data
-  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Bank)
-                               :PERSIST('~Tutorial::LogisticRegression::XXX::Test'); 
+  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Bank);
+                                
 END;

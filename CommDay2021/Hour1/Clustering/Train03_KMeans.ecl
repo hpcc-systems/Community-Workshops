@@ -6,6 +6,7 @@ IMPORT KMeans;
 TrainAttr := $.Convert02.myTrainAttrNF;
 
 //Initial centroids
+//Remember to update the values in the SET according to your previous DBSCAN run
 Centroids := TrainAttr(id IN [3,116,591,2036,2299]);
 
 //Setup the model parameters and the model

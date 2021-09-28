@@ -1,4 +1,6 @@
-﻿EXPORT DCTs := MODULE
+﻿// Data Dictionary MODULE for label enconding of the categorical variables
+
+EXPORT DCTs := MODULE
  EXPORT Ed_DS :=
   DATASET([
     {'university.degree',1}, 

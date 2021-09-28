@@ -18,16 +18,16 @@ EXPORT Prep01_MI := MODULE
 				  																									                   LEFT.State = 'NY' => 2,
 					  																																	 LEFT.State = 'FL' => 3,
 						  																																 0),
-                                                             SELF := LEFT))
-								  															             :PERSIST('~Tutorial::BoostForest::XXX::PrepProp');
+                                                             SELF := LEFT));
+								  															             
   // Shuffle your data by sorting on the random field
   SHARED myDataES := SORT(myDataE(wi_id <> 0), rnd);
   // Now cut the deck and you have random samples within each set
   // While you're at it, project back to your original format -- we dont need the rnd field anymore
   // Treat first 5000 as training data.  Transform back to the original format.
-  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop)
-                               :PERSIST('~Tutorial::BoostForest::XXX::Train');  
+  EXPORT myTrainData := PROJECT(myDataES[1..5000], ML_Prop);
+                                 
   // Treat next 2000 as test data
-  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop)
-                               :PERSIST('~Tutorial::BoostForest::XXX::Test'); 
+  EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Prop);
+                               
 END;

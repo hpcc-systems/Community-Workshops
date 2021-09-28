@@ -1,10 +1,10 @@
 ﻿IMPORT $,STD;
 
 //Browse raw input data
-// OUTPUT($.File_Banking.File,NAMED('Banking'));
-// COUNT($.File_Banking.File);
-// COUNT($.File_Banking.File(y='0'));
-// COUNT($.File_Banking.File(y='1'));
+OUTPUT($.File_Banking.File,NAMED('Banking'));
+COUNT($.File_Banking.File);
+COUNT($.File_Banking.File(y='0'));
+COUNT($.File_Banking.File(y='1'));
 
 // Profiling the raw data
 // STD.DataPatterns.Benford($.File_Banking.File);
@@ -21,7 +21,7 @@
 // COUNT($.Prep01.myTestData);
 
 // Browse converted train and test data
-OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
-OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
-OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
-OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));
+// OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
+// OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
+// OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
+// OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));

@@ -1,4 +1,9 @@
-﻿EXPORT File_Property := MODULE
+﻿// The dataset we are using contains ficticious information from properties. 
+// The regression goal is to train a model that can predict property prices.
+// The raw dataset can be downloaded from our online ECL Training Advanced ECL (part1) class:
+// https://learn.lexisnexis.com/Activity/1102# (OnlineProperty)
+
+EXPORT File_Property := MODULE
   EXPORT Layout := RECORD
    UNSIGNED8 personid;
    INTEGER8  propertyid;
@@ -23,7 +28,9 @@
    UNSIGNED2 year_built;
   END;
   EXPORT File := DATASET('~Tutorial::BoostForest::Property',Layout,THOR);
-  EXPORT MLProp := RECORD
+ 
+ //New record structure for training the property price model  
+	EXPORT MLProp := RECORD
    UNSIGNED8 PropertyID; //identifier - required for LearningTrees NF
    UNSIGNED3 zip;				 //Categorical independent variable - need to be converted to a numerical value
    UNSIGNED4 assessed_value;
@@ -36,6 +43,8 @@
    UNSIGNED2 year_built;
    UNSIGNED4 total_value; //Dependent Variable - what we are trying to predict
  END;
+ 
+ //New record structure for training multiple property price models using Myriad Interface
  EXPORT MLPropMI := RECORD
   MLProp;
   UNSIGNED4 wi_id;   //work-item id for Myriad Interface
