@@ -1,5 +1,3 @@
 {
-    "ecl.launchConfiguration": "CommDayWorkshop2021",
-    "ecl.targetCluster": {},
-    "ecl.eclccPath": "/usr/bin/eclcc"
+    "ecl.forceProxySupport": true
 }
