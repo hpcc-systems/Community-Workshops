@@ -1,45 +1,37 @@
 ﻿//Import:ecl:Workshops.CommDay2021.Hour2.LogisticReg.BWR_ViewPrepData
 IMPORT $,STD;
-
 //Browse raw input data
-OUTPUT($.File_Banking.File,NAMED('Banking'));
-COUNT($.File_Banking.File);
-COUNT($.File_Banking.File(y='0'));
-COUNT($.File_Banking.File(y='1'));
-
+// OUTPUT($.File_Banking.File,NAMED('Banking'));
+// COUNT($.File_Banking.File);
+// COUNT($.File_Banking.File(y='0'));
+// COUNT($.File_Banking.File(y='1'));
 // Profiling the raw data
 // STD.DataPatterns.Benford($.File_Banking.File);
 // STD.DataPatterns.Profile($.File_Banking.File);
-
 //Browse encoded input data 
-// OUTPUT($.Prep01.myDataE,NAMED('EncodedBanking'));
-// COUNT($.Prep01.myDataE);
-
+OUTPUT($.Prep01.myDataE,NAMED('EncodedBanking'));
+COUNT($.Prep01.myDataE);
 // Browse encoded train data and test data
-// OUTPUT($.Prep01.myTrainData,NAMED('TrainData'));
-// COUNT($.Prep01.myTrainData);
-// OUTPUT($.Prep01.myTestData,NAMED('TestData'));
-// COUNT($.Prep01.myTestData);
-
+OUTPUT($.Prep01.myTrainData,NAMED('TrainData'));
+COUNT($.Prep01.myTrainData);
+OUTPUT($.Prep01.myTestData,NAMED('TestData'));
+COUNT($.Prep01.myTestData);
 // Browse converted train and test data
-// OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
-// OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
-// OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
-// OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));
+OUTPUT($.Convert02.myIndTrainDataNF,NAMED('IndTrain'));
+OUTPUT($.Convert02.myDepTrainDataNF,NAMED('DepTrain'));
+OUTPUT($.Convert02.myIndTestDataNF,NAMED('IndTest'));
+OUTPUT($.Convert02.myDepTestDataNF,NAMED('DepTest'));
 
 //Import:ecl:Workshops.CommDay2021.Hour2.LogisticReg.Convert02
 IMPORT $;
 IMPORT ML_Core;
-
 myTrainData := $.Prep01.myTrainData;
 myTestData  := $.Prep01.myTestData;
-
 //Numeric Field Matrix conversion
 ML_Core.ToField(myTrainData, myTrainDataNF);
 ML_Core.ToField(myTestData, myTestDataNF);
 // OUTPUT(myTrainDataNF, NAMED('TrainDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
 // OUTPUT(myTestDataNF, NAMED('TestDataNF'));  //Uncomment to spot the Numeric Field Matrix conversion
-
 //* <-- Delete the first forward slash (/) just before the asterisk (*) to comment out the entire MODULE
 EXPORT Convert02 := MODULE
   //We have 20 independent fields and the last field (21) is the dependent
@@ -58,7 +50,6 @@ END;
 
 //Import:ecl:Workshops.CommDay2021.Hour2.LogisticReg.DCTs
 // Data Dictionary MODULE for label enconding of the categorical variables
-
 EXPORT DCTs := MODULE
  EXPORT Ed_DS :=
   DATASET([
@@ -123,7 +114,6 @@ EXPORT POut_DS :=
     {'nonexistant', 1}, 
     {'failure', 2}, 
     {'success', 3}],{STRING11 pout,UNSIGNED1 poutcode});		
-
 //************************************************
 EXPORT EdDCT  := DICTIONARY(Ed_DS,{Education => EdCode});
 EXPORT MapEd2Code(STRING Education) := EdDCT[Education].EdCode;
@@ -139,7 +129,6 @@ EXPORT MarDCT := DICTIONARY(Marital_DS,{marital => mtlCode});
 EXPORT MapMar2Code(STRING Marital) := MarDCT[Marital].mtlCode;
 EXPORT PODCT  := DICTIONARY(POut_DS,{pout => PoutCode});
 EXPORT MapPO2Code(STRING POut) := PODCT[POut].POutCode;
-
 END;
 
 //Import:ecl:Workshops.CommDay2021.Hour2.LogisticReg.File_Banking
@@ -147,7 +136,6 @@ END;
 // Portuguese banking institution. The classification goal is to predict whether the client 
 // will subscribe (1/0) to a term deposit (variable y).
 // https://archive.ics.uci.edu/ml/datasets/bank+marketing (bank-additional-full.csv)
-
 EXPORT File_Banking := MODULE
 //** = categorical
   EXPORT Layout := RECORD
@@ -173,9 +161,7 @@ EXPORT File_Banking := MODULE
     STRING nr_employed;    //number of employees
     STRING y;              //subscribed? Yes/No - dependent
   END;
-
   EXPORT File := DATASET('~Tutorial::LogisticRegression::banking',layout,CSV(HEADING(1)));
-
   //New record structure for training the client subscription model
   EXPORT MLBank := RECORD
    UNSIGNED4 RecID;
@@ -204,17 +190,15 @@ EXPORT File_Banking := MODULE
    UNSIGNED1 y;              //subscribed? Yes/No - dependent data
   END;
 END;
+
 //Import:ecl:Workshops.CommDay2021.Hour2.LogisticReg.Prep01
 IMPORT $;
-
 Bank    := $.File_Banking.File;
 ML_Bank := $.File_Banking.MLBank;
-
 EXPORT Prep01 := MODULE
   MLBankExt := RECORD(ML_Bank)
     UNSIGNED4 rnd; // A random number
   END;
-
   // Format the data and assign a random number to each record
   MLBankExt ML_Clean(Bank le, INTEGER Cnt) := TRANSFORM
    SELF.rnd            := RANDOM(); 
@@ -242,11 +226,8 @@ EXPORT Prep01 := MODULE
    SELF.y              := (UNSIGNED1)Le.Y;
    SELF := Le;
   END;
-
-
   EXPORT myDataE := PROJECT(Bank,ML_Clean(LEFT,COUNTER));
                            
-
   // Shuffle your data by sorting on the random field
   SHARED myDataES := SORT(myDataE, rnd);
   // Now cut the deck and you have random samples within each set
@@ -258,17 +239,16 @@ EXPORT Prep01 := MODULE
   EXPORT myTestData  := PROJECT(myDataES[5001..7000], ML_Bank);
                                 
 END;
+
 //Import:ecl:Workshops.CommDay2021.Hour2.LogisticReg.Train03
 IMPORT LogisticRegression as LR;
 IMPORT ML_Core;
 IMPORT $;
-
 //Training and Test data
 XTrain := $.Convert02.myIndTrainDataNF;
 YTrain := $.Convert02.myDepTrainDataNF;
 XTest  := $.Convert02.myIndTestDataNF;
 YTest  := $.Convert02.myDepTestDataNF;
-
 //Train Logistic Regression Model on Banking data
 myLearner := LR.BinomialLogisticRegression();
 myModel   := myLearner.getModel(XTrain, YTrain);
@@ -276,9 +256,8 @@ myModel   := myLearner.getModel(XTrain, YTrain);
 //Test Logistic Regression Model on Banking data
 MyPredict := myLearner.Classify(myModel, XTest);
 OUTPUT(MyPredict, NAMED('PredictedValues'));
-
 //Assess Logistic Regression model on Banking data
-MyConfMatrix := LR.Confusion(Ytest,MyPredict);
+MyConfMatrix := ML_Core.Analysis.Classification.ConfusionMatrix(Ytest,MyPredict);
 OUTPUT(MyConfMatrix, NAMED('ConfusionMatrix'));
 MyConfAccy := LR.BinomialConfusion(MyConfMatrix);
 OUTPUT(MyConfAccy, NAMED('ConfusionAccuracy'));	 
@@ -293,7 +272,7 @@ OUTPUT(MyDeviance, NAMED('DevianceValues'));
 MyAIC := LR.Model_Deviance(MyDeviance,MyBeta);
 OUTPUT(MyAIC, NAMED('AIC'));
    
-
+   
    
 
-   
+

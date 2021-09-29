@@ -1,13 +1,11 @@
 ﻿IMPORT LogisticRegression as LR;
 IMPORT ML_Core;
 IMPORT $;
-
 //Training and Test data
 XTrain := $.Convert02.myIndTrainDataNF;
 YTrain := $.Convert02.myDepTrainDataNF;
 XTest  := $.Convert02.myIndTestDataNF;
 YTest  := $.Convert02.myDepTestDataNF;
-
 //Train Logistic Regression Model on Banking data
 myLearner := LR.BinomialLogisticRegression();
 myModel   := myLearner.getModel(XTrain, YTrain);
@@ -15,9 +13,8 @@ myModel   := myLearner.getModel(XTrain, YTrain);
 //Test Logistic Regression Model on Banking data
 MyPredict := myLearner.Classify(myModel, XTest);
 OUTPUT(MyPredict, NAMED('PredictedValues'));
-
 //Assess Logistic Regression model on Banking data
-MyConfMatrix := LR.Confusion(Ytest,MyPredict);
+MyConfMatrix := ML_Core.Analysis.Classification.ConfusionMatrix(Ytest,MyPredict);
 OUTPUT(MyConfMatrix, NAMED('ConfusionMatrix'));
 MyConfAccy := LR.BinomialConfusion(MyConfMatrix);
 OUTPUT(MyConfAccy, NAMED('ConfusionAccuracy'));	 
@@ -32,7 +29,6 @@ OUTPUT(MyDeviance, NAMED('DevianceValues'));
 MyAIC := LR.Model_Deviance(MyDeviance,MyBeta);
 OUTPUT(MyAIC, NAMED('AIC'));
    
-
+   
    
 
-   
