@@ -16,7 +16,7 @@ ecl bundle install https://github.com/hpcc-systems/LogisticRegression.git
 ecl bundle install https://github.com/hpcc-systems/GNN.git
 ecl bundle install https://github.com/hpcc-systems/LearningTrees.git
 ```
-**Note I**:  Alternatively, by using your GitHub credentials, you can try the code examples directly via GitPod: https://gitpod.io/#https://github.com/HWatanuki/Community-Workshops
+**Note I**:  Alternatively, by using your GitHub credentials, you can try the code examples directly via GitPod: https://gitpod.io/#https://github.com/hpcc-systems/Community-Workshops
 
 **Sample datasets can be downloaded from the following locations:**
 
