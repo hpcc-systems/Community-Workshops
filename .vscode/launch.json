@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "CommDayWorkshop2021",
+            "type": "ecl",
+            "request": "launch",
+            "protocol": "http",
+            "serverAddress": "52.52.151.87",
+            "port": 8010,
+            "targetCluster": "thor",
+            "rejectUnauthorized": true,
+            "resultLimit": 100,
+            "timeoutSecs": 60,
+            "user": "gitpod_user",
+            "password": ""
+        }
+    ]
+}
+

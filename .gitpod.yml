@@ -1,0 +1,7 @@
+#image: hpccsystems/clienttools
+image:
+  file: .gitpod.Dockerfile
+
+vscode:
+  extensions:
+    - https://github.com/hpcc-systems/vscode-ecl/releases/latest/download/hpcc-systems.ecl.vsix

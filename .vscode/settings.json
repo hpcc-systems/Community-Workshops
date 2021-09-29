@@ -1,0 +1,5 @@
+{
+    "ecl.forceProxySupport": true,
+    "ecl.launchConfiguration": "CommDayWorkshop2021",
+    "ecl.targetCluster": {}
+}
