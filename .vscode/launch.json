@@ -14,7 +14,20 @@
             "timeoutSecs": 60,
             "user": "gitpod_user",
             "password": ""
+        },
+        {
+            "name": "localhost",
+            "type": "ecl",
+            "request": "launch",
+            "protocol": "http",
+            "serverAddress": "localhost",
+            "port": 8010,
+            "targetCluster": "thor",
+            "rejectUnauthorized": true,
+            "resultLimit": 100,
+            "timeoutSecs": 60,
+            "user": "gitpod_user",
+            "password": ""
         }
     ]
 }
-
