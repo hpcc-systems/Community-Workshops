@@ -1,5 +1,5 @@
 # Community-Workshops
-ECL course material for community workshops. The training cluster utilized during the workshop is: http://52.52.151.87:8010/.
+ECL course material for community workshops.
 
 # Client installation prerequisites
 1. Download and install the latest ECL IDE version available from https://hpccsystems.com/download#HPCC-Platform. For detailed information on how to setup the ECL IDE, please watch this instructional video: https://www.youtube.com/watch?v=TT7rCcyWTAo
