@@ -6,7 +6,7 @@
             "type": "ecl",
             "request": "launch",
             "protocol": "http",
-            "serverAddress": "52.52.151.87",
+            "serverAddress": "54.215.2.79",
             "port": 8010,
             "targetCluster": "thor",
             "rejectUnauthorized": true,
