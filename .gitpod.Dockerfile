@@ -1,7 +1,7 @@
 FROM gitpod/workspace-full
 
 RUN sudo apt-get -y update
-RUN sudo apt-get install openssh-server
+RUN sudo apt-get -y install openssh-server
 RUN sudo service ssh restart
 
 # Install the latest hpccsystems clienttools and required ML bundles.
