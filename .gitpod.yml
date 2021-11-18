@@ -6,6 +6,7 @@ image:
 ports:
   - port: 6400-6499
     onOpen: ignore
+    visibility: public
   - port: 8010
     onOpen: ignore
     visibility: public
