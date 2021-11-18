@@ -4,7 +4,7 @@ image:
   file: .gitpod.Dockerfile
 
 ports:
-  - port: 6400-6499
+  - port: 22
     onOpen: ignore
     visibility: public
   - port: 8010
