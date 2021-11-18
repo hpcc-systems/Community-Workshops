@@ -45,6 +45,8 @@ vscode:
 tasks:
   - name: Start HPCC-Systems Platform
     command: sudo /etc/init.d/hpcc-init start
+  - name: Start shh
+    command: sudo /etc/init.d/ssh start
 
 
 
