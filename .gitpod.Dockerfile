@@ -1,7 +1,7 @@
 FROM gitpod/workspace-full
 
 RUN sudo apt-get -y update
-RUN /etc/init.d/ssh start
+RUN sudo service ssh start
 
 # Install the latest hpccsystems clienttools and required ML bundles.
 WORKDIR /tmp
