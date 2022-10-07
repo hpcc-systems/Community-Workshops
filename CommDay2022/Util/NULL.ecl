@@ -1,0 +1,6 @@
+﻿EXPORT NULL := MODULE
+ EXPORT Str := {BOOLEAN Nil,STRING Val};
+ EXPORT Int := {BOOLEAN Nil,INTEGER Val};
+ EXPORT Rel := {BOOLEAN Nil,REAL Val};
+ EXPORT Out(n) := CHOOSE(n,'\000','NULL','null');
+END;
